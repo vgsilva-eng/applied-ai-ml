@@ -3,7 +3,11 @@
 
 # Project Overview
 
-This project analyzes income and demographic data from the Adult Census dataset to identify market opportunities for paper planner products (e.g., Moleskine, Franklin Day Planners) in the face of declining sales due to digital alternatives. The analysis examines the relationship between age, gender, education level, and income to inform targeted marketing strategies for traditional paper planning products in an increasingly digital marketplace.
+
+ADDING HERE
+
+
+
 
 
 ## Table of Contents
@@ -24,7 +28,6 @@ This project analyzes income and demographic data from the Adult Census dataset 
 
 **Description:** 
 
-The Medical Context
 Cardiotocography is a medical monitoring technique used during pregnancy and labor to assess fetal well-being. It simultaneously records two signals:
 
 1. Fetal Heart Rate (FHR) — how fast the baby's heart is beating
