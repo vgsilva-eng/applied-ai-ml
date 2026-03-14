@@ -14,7 +14,7 @@ git branch
 
 ### 2. Is your local main up to date? Pull the updated repo
 ```bash
-git pull origin main
+git pull pullall
 ```
 
 ### 3. Create a new branch using your name and feature name
