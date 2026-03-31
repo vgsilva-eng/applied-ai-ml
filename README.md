@@ -113,7 +113,7 @@ applied-ai-ml/
 │
 ├── notebooks/
 │   └── dataset_cleaning.ipynb      # Exploratory Data Analysis (EDA)
-│
+│   └── Model Analysis.ipynb        # Model Selection/Analysis
 ├── requirements.txt                # Python dependencies
 ├── README.md                       # Project documentation
 ├── LICENSE                         # MIT License
