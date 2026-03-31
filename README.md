@@ -33,7 +33,7 @@ This project aims to assist clinicians by providing objective, data-driven asses
 
 ## Dataset
 
-**Source:** [UCI Machine Learning Repository - Cardiotocography Dataset](https://archive.ics.uci.edu/dataset/193/cardiotocography)
+**Source:** [UCI Machine Learning Repository - Cardiotocography](https://archive.ics.uci.edu/dataset/193/cardiotocography)
 
 **Description:** 
 
