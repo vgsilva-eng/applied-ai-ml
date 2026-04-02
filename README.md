@@ -183,9 +183,21 @@ Our analysis follows a structured approach:
 
 ### Expected Results
 Final models will be evaluated on:
-- 
-- 
-- @lashana adding here
+- F1 - score
+- Recall
+- Precision
+Ranking model performance:
+- XGBoost
+- Random Forest
+- SVM
+Model performance based on Pathogenic cases:
+- XGBoost
+- Random Forest
+- SVM
+Model performance based on Suspect cases based on F1 - score:
+- XGBoost
+- Random Forest
+- SVM
 ---
 
 ## Technologies Used
