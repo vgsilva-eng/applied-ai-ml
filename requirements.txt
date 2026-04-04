@@ -8,3 +8,7 @@ jupyter
 scipy
 statsmodels
 plotly
+imbalanced-learn
+xgboost
+shap
+graphviz
