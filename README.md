@@ -112,13 +112,13 @@ Targets: Two labels assigned by expert obstetricians
 applied-ai-ml/
 │
 ├── notebooks/
-│   └── dataset_cleaning.ipynb      # Exploratory Data Analysis (EDA)
-│   └── Model Analysis.ipynb        # Model Selection/Analysis
+│   ├── AAI-501_Final_Project.ipynb   # Main project notebook (full pipeline)
+│   ├── dataset_cleaning.ipynb        # Initial EDA and data exploration
+│   └── Model_Analysis.ipynb          # Supplementary model analysis
+│
 ├── requirements.txt                # Python dependencies
 ├── README.md                       # Project documentation
-├── LICENSE                         # MIT License
-├── Projectinstructions.md          # Assignment instructions
-└── venv/                           # Virtual environment (not tracked)
+└── LICENSE                         # MIT License
 ```
 
 ---
@@ -140,64 +140,63 @@ Our analysis follows a structured approach:
    - Correlation analysis and multicollinearity detection
 
 ### 3. **Data Preprocessing**
-   - Handle class imbalance using stratified sampling
-   - Feature scaling (StandardScaler for linear models)
-   - Feature transformation (log/sqrt for skewed features)
-   - Train/test split with stratification
+   - Stratified 70/30 train/test split to preserve class proportions
+   - SMOTE applied to training set only to address class imbalance
+   - Feature scaling via `StandardScaler` inside pipeline (leak-free)
 
-### 4. **Feature Engineering**
-   - Create interaction features (e.g., `ASTV × AC`)
-   - Generate ratio features (e.g., `AC/UC`)
-   - Feature selection based on correlation and importance
+### 4. **Feature Selection**
+   - `SelectKBest(f_classif, k=10)` for Linear SVM
+   - `SelectFromModel(RandomForestClassifier)` for Random Forest
+   - `SelectFromModel(XGBClassifier)` for XGBoost (selected 6 features: AC, ASTV, ALTV, MSTV, DP, Mean)
 
 ### 5. **Model Development**
-   - Baseline models: Random Forest, XGBoost
-   - Alternative models: Logistic Regression, SVM
-   - Class weight balancing for imbalanced data
-   - Hyperparameter tuning via GridSearch/RandomSearch
+   - Three models trained inside scikit-learn `Pipeline` (preprocessing + feature selection + model)
+   - **Linear SVM** — `class_weight='balanced'`, SelectKBest
+   - **Random Forest** — `class_weight='balanced'`, SelectFromModel
+   - **XGBoost** — GridSearchCV for hyperparameter tuning (`n_estimators`, `max_depth`, `learning_rate`)
 
 ### 6. **Model Evaluation**
    - Primary metric: **Macro F1-Score** (treats all classes equally)
    - Per-class precision, recall, and F1-score
    - Confusion matrix analysis
-   - Feature importance analysis
+   - Cross-validation (5-fold StratifiedKFold) on training data
+   - SHAP values for model interpretability
+   - Overfitting check (train vs. test performance gap)
 
 ### 7. **Results & Interpretation**
-   - Model comparison and selection
-   - Clinical interpretation of predictions
-   - Error analysis (where does the model fail?)
-   - Recommendations for deployment
+   - Model comparison and selection (XGBoost best overall)
+   - SHAP analysis confirming clinically meaningful feature signals
+   - Overfitting assessment with recommendations
 
 ---
 
 ## Results
 
-> **Status:** In Progress
+> **Status:** Completed
 
 ### Key Findings from EDA
 - **Class Imbalance:** Normal (78%), Suspect (14%), Pathologic (8%)
 - **Top Predictive Features:** `ASTV`, `ALTV`, `AC`, `LB`, `DL`, `DP`
 - **No missing values** detected
 - **Outliers are clinically significant**, not errors
-- **Recommended models:** Tree-based (Random Forest, XGBoost) for robustness
+- **Tree-based models** (Random Forest, XGBoost) outperformed linear models as expected
 
-### Expected Results
-Final models will be evaluated on:
-- F1 - score
-- Recall
-- Precision
-Ranking model performance:
-- XGBoost
-- Random Forest
-- SVM
-Model performance based on Pathogenic cases:
-- XGBoost
-- Random Forest
-- SVM
-Model performance based on Suspect cases based on F1 - score:
-- XGBoost
-- Random Forest
-- SVM
+### Final Model Results
+
+| Model | Macro F1 | Pathologic Recall | Suspect Recall |
+|-------|----------|------------------|----------------|
+| Linear SVM | Lowest | ~75.5% | ~84.1% |
+| Random Forest | Strong | ~92.5% | ~64.8% |
+| **XGBoost** | **Best** | **~92.5%** | **~72.7%** |
+
+**XGBoost** selected as final model — Accuracy **92.9%**, strongest macro F1, highest recall for the clinically critical Pathologic class.
+
+### SHAP Key Findings
+- `ASTV` and `ALTV` are the most influential features — higher abnormal variability strongly increases predicted risk
+- Loss of accelerations (`AC`) is a key indicator of Pathologic classification
+- Baseline heart rate (`LB`) depression signals fetal distress
+- All top features align with established clinical CTG interpretation guidelines
+
 ---
 
 ## Technologies Used
@@ -211,7 +210,11 @@ Model performance based on Suspect cases based on F1 - score:
 | `pandas` | Data manipulation and analysis |
 | `numpy` | Numerical computing |
 | `scikit-learn` | Machine learning algorithms and evaluation |
+| `xgboost` | XGBoost gradient boosting classifier |
+| `imbalanced-learn` | SMOTE for class imbalance handling |
+| `shap` | Model interpretability via SHAP values |
 | `ucimlrepo` | Dataset loading from UCI repository |
+| `graphviz` | XGBoost decision tree visualization |
 
 ### Visualization
 | Library | Purpose |
@@ -259,4 +262,4 @@ This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) 
 
 ---
 
-**Last Updated:** March 30, 2026
+**Last Updated:** April 4, 2026
