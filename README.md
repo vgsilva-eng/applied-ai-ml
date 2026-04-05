@@ -151,9 +151,9 @@ Our analysis follows a structured approach:
 
 ### 5. **Model Development**
    - Three models trained inside scikit-learn `Pipeline` (preprocessing + feature selection + model)
-   - **Linear SVM** — `class_weight='balanced'`, SelectKBest
+   - **Linear SVM** — `class_weight='balanced'`, SelectKBest, GridSearchCV for feature selection tuning
    - **Random Forest** — `class_weight='balanced'`, SelectFromModel
-   - **XGBoost** — GridSearchCV for hyperparameter tuning (`n_estimators`, `max_depth`, `learning_rate`)
+   - **XGBoost** — GridSearchCV for hyperparameter tuning (`k`,`n_estimators`, `max_depth`, `learning_rate`), SelectKBest
 
 ### 6. **Model Evaluation**
    - Primary metric: **Macro F1-Score** (treats all classes equally)
