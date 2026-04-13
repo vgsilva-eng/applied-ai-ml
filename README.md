@@ -185,9 +185,9 @@ Our analysis follows a structured approach:
 
 | Model | Macro F1 | Pathologic Recall | Suspect Recall |
 |-------|----------|------------------|----------------|
-| Linear SVM | Lowest | ~75.5% | ~84.1% |
-| Random Forest | Strong | ~92.5% | ~64.8% |
-| **XGBoost** | **Best** | **~92.5%** | **~72.7%** |
+| Linear SVM | ~0.83 | ~75.5% | ~84.1% |
+| Random Forest | ~0.91 | ~92.5% | ~64.8% |
+| **XGBoost** | **~0.93** | **~92.5%** | **~72.7%** |
 
 **XGBoost** selected as final model — Accuracy **~93%**, strongest macro F1, highest recall for the clinically critical Pathologic class.
 
