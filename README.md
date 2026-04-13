@@ -145,9 +145,9 @@ Our analysis follows a structured approach:
    - Feature scaling via `StandardScaler` inside pipeline (leak-free)
 
 ### 4. **Feature Selection**
-   - `SelectKBest(f_classif, k=10)` for Linear SVM
+   - `SelectKBest(f_classif)` for Linear SVM — k tuned via GridSearchCV over [5, 10, 15, 'all']
    - `SelectFromModel(RandomForestClassifier)` for Random Forest
-   - `SelectFromModel(XGBClassifier)` for XGBoost (selected 6 features: AC, ASTV, ALTV, MSTV, DP, Mean)
+   - `SelectKBest(f_classif)` for XGBoost — k tuned via GridSearchCV over [5, 10, 15, 'all']
 
 ### 5. **Model Development**
    - Three models trained inside scikit-learn `Pipeline` (preprocessing + feature selection + model)
@@ -189,7 +189,7 @@ Our analysis follows a structured approach:
 | Random Forest | Strong | ~92.5% | ~64.8% |
 | **XGBoost** | **Best** | **~92.5%** | **~72.7%** |
 
-**XGBoost** selected as final model — Accuracy **92.9%**, strongest macro F1, highest recall for the clinically critical Pathologic class.
+**XGBoost** selected as final model — Accuracy **~93%**, strongest macro F1, highest recall for the clinically critical Pathologic class.
 
 ### SHAP Key Findings
 - `ASTV` and `ALTV` are the most influential features — higher abnormal variability strongly increases predicted risk
@@ -221,13 +221,11 @@ Our analysis follows a structured approach:
 |---------|---------|
 | `matplotlib` | Static plotting and visualizations |
 | `seaborn` | Statistical data visualization |
-| `plotly` | Interactive visualizations |
 
 ### Statistical Analysis
 | Library | Purpose |
-|---------|---------|
+|---------|--------|
 | `scipy` | Statistical tests and transformations |
-| `statsmodels` | Advanced statistical modeling |
 
 ### Development Environment
 - **Jupyter Notebook** — Interactive analysis and experimentation
